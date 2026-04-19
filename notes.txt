@@ -1,0 +1,5 @@
+conda create --prefix ./human_voice_cls_env python=3.10
+
+conda activate ./human_voice_cls_env
+
+conda install pandas matplotlib seaborn

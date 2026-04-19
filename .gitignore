@@ -1,5 +1,22 @@
+# Python cache
 __pycache__/
+*.pyc
 *.pkl
 *.zip
 .DS_Store
 .env
+
+# Data files (if large)
+data/
+*.wav
+*.csv
+
+# Ignore conda environment
+human_voice_cls_env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
