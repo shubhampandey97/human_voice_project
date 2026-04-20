@@ -3,11 +3,19 @@ __pycache__/
 *.pyc
 *.pkl
 *.zip
-.DS_Store
 .env
 
-# Data files (if large)
-data/
+# Ignore ONLY root data folder
+/data/
+
+# Allow src/data (important)
+!src/data/
+
+# Logs
+logs/
+*.log
+
+# Audio / large files
 *.wav
 *.csv
 
