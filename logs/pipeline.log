@@ -1,0 +1,35 @@
+2026-04-20 18:16:03,198 - __main__ - INFO - Pipeline started
+2026-04-20 18:20:57,057 - __main__ - INFO - Pipeline started
+2026-04-20 18:21:30,243 - __main__ - INFO - Pipeline started
+2026-04-20 18:34:42,204 - __main__ - INFO - Pipeline started
+2026-04-20 18:45:07,426 - __main__ - INFO - Pipeline started
+2026-04-20 18:45:07,918 - src.features.build_features - INFO - Feature engineering started
+2026-04-20 18:45:07,918 - src.features.build_features - INFO - Feature engineering completed
+2026-04-20 18:45:07,931 - src.models.train_model - INFO - Training models started
+2026-04-20 18:45:20,410 - src.models.train_model - INFO - Random Forest trained
+2026-04-20 18:45:23,383 - src.models.train_model - INFO - SVM trained
+2026-04-20 18:45:23,383 - src.models.train_model - INFO - All models trained
+2026-04-20 18:45:23,383 - src.models.evaluate - INFO - Evaluating model
+2026-04-20 18:45:23,451 - src.models.evaluate - INFO - Model accuracy: 0.9947
+2026-04-20 18:45:23,451 - __main__ - INFO - RandomForest Accuracy: 0.9946914399469144
+2026-04-20 18:45:23,451 - src.models.evaluate - INFO - Evaluating model
+2026-04-20 18:45:23,671 - src.models.evaluate - INFO - Model accuracy: 0.9993
+2026-04-20 18:45:23,671 - __main__ - INFO - SVM Accuracy: 0.9993364299933643
+2026-04-20 18:45:23,681 - __main__ - INFO - Best model saved
+2026-04-20 18:45:23,681 - __main__ - INFO - Pipeline completed successfully
+2026-04-20 18:55:55,614 - __main__ - INFO - Pipeline started
+2026-04-20 18:55:56,642 - __main__ - INFO - Processed data saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\processed\vocal_gender_features_cleaned.csv
+2026-04-20 18:55:56,642 - src.features.build_features - INFO - Feature engineering started
+2026-04-20 18:55:56,648 - src.features.build_features - INFO - Feature engineering completed
+2026-04-20 18:55:56,656 - src.models.train_model - INFO - Training models started
+2026-04-20 18:56:09,215 - src.models.train_model - INFO - Random Forest trained
+2026-04-20 18:56:12,529 - src.models.train_model - INFO - SVM trained
+2026-04-20 18:56:12,529 - src.models.train_model - INFO - All models trained
+2026-04-20 18:56:12,529 - src.models.evaluate - INFO - Evaluating model
+2026-04-20 18:56:12,599 - src.models.evaluate - INFO - Model accuracy: 0.9947
+2026-04-20 18:56:12,599 - __main__ - INFO - RandomForest Accuracy: 0.9946914399469144
+2026-04-20 18:56:12,599 - src.models.evaluate - INFO - Evaluating model
+2026-04-20 18:56:12,843 - src.models.evaluate - INFO - Model accuracy: 0.9993
+2026-04-20 18:56:12,844 - __main__ - INFO - SVM Accuracy: 0.9993364299933643
+2026-04-20 18:56:12,850 - __main__ - INFO - Best model saved
+2026-04-20 18:56:12,851 - __main__ - INFO - Pipeline completed successfully
