@@ -14,6 +14,9 @@ from src.features.build_features import build_features
 from src.models.train_model import train_models
 from src.models.evaluate import evaluate_model
 
+import shap
+import matplotlib.pyplot as plt
+
 logger = get_logger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -41,10 +44,11 @@ def run_pipeline():
         logger.info(f"Features after engineering: {df.shape}")
 
         # Preprocessing
-        X, y, scaler = preprocess_data(df)
+        X, y, scaler, selector, selected_features = preprocess_data(df)
 
         # Save processed data
-        processed_df = pd.DataFrame(X, columns=df.drop("label", axis=1).columns)
+        # processed_df = pd.DataFrame(X, columns=df.drop("label", axis=1).columns)
+        processed_df = pd.DataFrame(X, columns=selected_features)
         processed_df["label"] = y.values
 
         processed_path = BASE_DIR / "data" / "processed"
@@ -110,13 +114,82 @@ def run_pipeline():
 
         joblib.dump(best_model, models_path / "best_model.pkl")
         joblib.dump(scaler, models_path / "scaler.pkl")
-        
+        joblib.dump(selector, models_path / "selector.pkl")
+                
         with open(models_path / "model_info.txt", "w") as f:
             f.write(f"Best Model: {best_model_name}\nAccuracy: {best_score}")
-        
+
+        # ------------------ Save Scaler Report ------------------
+        feature_names = df.drop("label", axis=1).columns
+
+        scaler_df = pd.DataFrame({
+            "feature": feature_names,
+            "mean": scaler.mean_,
+            "std_dev": scaler.scale_
+        })
+
+        scaler_csv_path = models_path / "scaler_info.csv"
+        scaler_df.to_csv(scaler_csv_path, index=False)
+
+        mlflow.log_artifact(str(scaler_csv_path), artifact_path="scaler")
+
+        logger.info(f"Scaler report saved at {scaler_csv_path}")
+
+        # Save as formatted TXT
+        scaler_txt_path = models_path / "scaler_info.txt"
+
+        with open(scaler_txt_path, "w") as f:
+            f.write("=== SCALER REPORT ===\n\n")
+            f.write("Type: StandardScaler\n")
+            f.write(f"Total Features: {len(feature_names)}\n\n")
+
+            f.write("{:<30} {:>15} {:>15}\n".format("Feature", "Mean", "Std Dev"))
+            f.write("=" * 65 + "\n")
+
+            for name, mean, std in zip(feature_names, scaler.mean_, scaler.scale_):
+                f.write("{:<30} {:>15.6f} {:>15.6f}\n".format(name, mean, std))
+
+        logger.info(f"Scaler report saved at {scaler_csv_path} and {scaler_txt_path}")
+
+        with open(models_path / "selected_features.txt", "w") as f:
+            for feat in selected_features:
+                f.write(f"{feat}\n")
 
         logger.info(f"Best model: {best_model_name} with accuracy {best_score}")
         logger.info("Best model saved")
+
+        logger.info("Generating SHAP explanations (using RandomForest)")
+
+        # Find RandomForest model
+        rf_model = None
+        for name, model in models.items():
+            if "RandomForest" in name:
+                rf_model = model.best_estimator_
+
+        # Use RF for SHAP (tree-based = fast + accurate)
+        if rf_model is not None:
+
+            X_sample = X_train[:200]
+
+            explainer = shap.TreeExplainer(rf_model)
+            shap_values = explainer.shap_values(X_sample)
+
+            # Plot
+            shap.summary_plot(shap_values, X_sample, show=False)
+
+            reports_path = BASE_DIR / "reports"
+            reports_path.mkdir(exist_ok=True)
+
+            shap_file = reports_path / "shap_summary.png"
+            plt.savefig(shap_file)
+            plt.close()
+
+            logger.info(f"SHAP plot saved at {shap_file}")
+
+            mlflow.log_artifact(str(shap_file))
+
+        else:
+            logger.warning("RandomForest model not found for SHAP")
 
     logger.info("Pipeline completed successfully")
 

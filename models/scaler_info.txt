@@ -1,0 +1,55 @@
+=== SCALER REPORT ===
+
+Type: StandardScaler
+Total Features: 48
+
+Feature                                   Mean         Std Dev
+=================================================================
+mean_spectral_centroid             1701.016730      316.714745
+std_spectral_centroid              1018.101219      285.901702
+mean_spectral_bandwidth            1584.814907      127.378999
+std_spectral_bandwidth              428.429180       74.229388
+mean_spectral_contrast               20.381209        1.587190
+mean_spectral_flatness                0.022578        0.009721
+mean_spectral_rolloff              3268.940737      531.017591
+zero_crossing_rate                    0.116691        0.037476
+rms_energy                            0.084072        0.022454
+mean_pitch                         1453.099270      287.107310
+min_pitch                           153.423831        0.973824
+max_pitch                          3990.701275        5.372495
+std_pitch                          1157.936992      124.078036
+spectral_skew                         1.591296        0.476818
+spectral_kurtosis                     2.263661        2.100921
+energy_entropy                       27.019222        8.356444
+log_energy                            2.078721        0.375594
+mfcc_1_mean                        -256.004741       36.335488
+mfcc_1_std                          118.540042       20.564644
+mfcc_2_mean                          85.688088       19.516003
+mfcc_2_std                           54.702944       10.890022
+mfcc_3_mean                           4.182982       12.342980
+mfcc_3_std                           35.047245        6.655944
+mfcc_4_mean                          33.770122        9.363295
+mfcc_4_std                           29.738185        4.824372
+mfcc_5_mean                          -6.223581       10.909781
+mfcc_5_std                           22.825671        4.609441
+mfcc_6_mean                           2.854803        6.454098
+mfcc_6_std                           17.299208        2.820195
+mfcc_7_mean                          -8.225498        8.829892
+mfcc_7_std                           16.185110        3.086605
+mfcc_8_mean                          -5.743766        7.456974
+mfcc_8_std                           15.127284        2.727154
+mfcc_9_mean                          -8.158414        6.176893
+mfcc_9_std                           13.567765        2.436451
+mfcc_10_mean                         -0.353836        5.635035
+mfcc_10_std                          12.488106        2.317070
+mfcc_11_mean                         -8.758410        5.375303
+mfcc_11_std                          11.023456        1.880391
+mfcc_12_mean                          0.754074        4.298965
+mfcc_12_std                           9.711546        1.803531
+mfcc_13_mean                         -6.488263        4.062306
+mfcc_13_std                           9.535439        1.539033
+pitch_energy_ratio                18658.006723     6735.985446
+spectral_shape                      822.677443       80.032125
+mfcc_mean_avg                       -13.301161        3.752754
+mfcc_variability                     28.154743        2.208196
+pitch_range                        3837.100910        5.823077

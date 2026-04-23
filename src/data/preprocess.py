@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
+
 from sklearn.preprocessing import StandardScaler
+from sklearn.feature_selection import SelectKBest, f_classif
+
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -75,4 +78,9 @@ def preprocess_data(df):
 
     logger.info("Scaling completed")
 
-    return X_scaled, y, scaler
+    # Select top 20 features
+    selector = SelectKBest(score_func=f_classif, k=20)
+    X_selected = selector.fit_transform(X_scaled, y)
+    selected_features = X.columns[selector.get_support()]
+
+    return X_selected, y, scaler, selector, selected_features
