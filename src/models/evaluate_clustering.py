@@ -4,7 +4,10 @@ from src.utils.logger import get_logger
 logger = get_logger(__name__)
 
 def evaluate_clustering(model, X):
-    labels = model.labels_
+    if hasattr(model, "labels_"):
+        labels = model.labels_
+    else:
+        labels = model.fit_predict(X)
 
     unique_labels = set(labels)
 
