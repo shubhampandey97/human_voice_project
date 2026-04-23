@@ -5,7 +5,23 @@ from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-def preprocess_data(df: pd.DataFrame):
+def remove_outliers_iqr(df, factor=1.5):
+    """Clip outliers using IQR"""
+    numeric_cols = df.select_dtypes(include=np.number).columns.drop("label")
+
+    for col in numeric_cols:
+        Q1 = df[col].quantile(0.25)
+        Q3 = df[col].quantile(0.75)
+        IQR = Q3 - Q1
+
+        lower = Q1 - factor * IQR
+        upper = Q3 + factor * IQR
+
+        df[col] = np.clip(df[col], lower, upper)
+
+    return df
+
+def preprocess_data(df):
     """
     Preprocess the dataset:
     - Handle missing values
@@ -22,15 +38,18 @@ def preprocess_data(df: pd.DataFrame):
         scaler (StandardScaler): Fitted scaler
     """
 
-    df = df.copy()
-
-    # 🔹 Basic Cleaning
+    # Basic Cleaning
     logger.info("Starting preprocessing...")
 
     # Remove duplicates
-    initial_shape = df.shape
-    df.drop_duplicates(inplace=True)
-    logger.info(f"Removed duplicates: {initial_shape} → {df.shape}")
+    before = df.shape
+    df = df.drop_duplicates()
+    after = df.shape
+    logger.info(f"Removed duplicates: {before} → {after}")
+
+    # Outlier handling
+    df = remove_outliers_iqr(df)
+    logger.info("Outliers handled using IQR")
 
     # Handle missing values
     missing = df.isnull().sum().sum()

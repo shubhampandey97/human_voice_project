@@ -13,6 +13,7 @@ from src.data.preprocess import preprocess_data
 from src.features.build_features import build_features
 from src.models.train_model import train_models
 from src.models.evaluate import evaluate_model
+from src.features.build_features import build_features
 
 logger = get_logger(__name__)
 
@@ -35,6 +36,9 @@ def run_pipeline():
 
         logger.info(f"Loading data from {data_path}")
         df = load_data(str(data_path))
+
+        # Feature Engineering
+        df = build_features(df)
 
         # Preprocessing
         X, y, scaler = preprocess_data(df)
@@ -107,9 +111,9 @@ def run_pipeline():
         mlflow.log_metric("best_accuracy", best_score)
         mlflow.log_param("best_model", best_model_name)
 
-        # os.makedirs("models", exist_ok=True)
+        os.makedirs("models", exist_ok=True)
 
-        # joblib.dump(best_model, models_path / "best_model.pkl")
+        joblib.dump(best_model, models_path / "best_model.pkl")
         with open(models_path / "model_info.txt", "w") as f:
             f.write(f"Best Model: {best_model_name}\nAccuracy: {best_score}")
         joblib.dump(scaler, models_path / "scaler.pkl")
