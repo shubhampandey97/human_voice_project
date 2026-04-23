@@ -13,13 +13,10 @@ from src.data.preprocess import preprocess_data
 from src.features.build_features import build_features
 from src.models.train_model import train_models
 from src.models.evaluate import evaluate_model
-import sys
-sys.stdout.reconfigure(encoding='utf-8')
 
 logger = get_logger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parents[2]
-print("BASE_DIR:", BASE_DIR)
 
 def run_pipeline():
     logger.info("Pipeline started")
@@ -31,7 +28,7 @@ def run_pipeline():
     models_path =  BASE_DIR / "models"
     models_path.mkdir(exist_ok=True)
 
-    with mlflow.start_run():
+    with mlflow.start_run(run_name="main_pipeline"):
         # Log parameters
         mlflow.log_param("test_size", 0.2)
         mlflow.log_param("random_state", 42)
@@ -58,6 +55,9 @@ def run_pipeline():
 
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
+        # mlflow.log_param("train_samples", len(X_train))
+        mlflow.log_param("test_samples", len(X_test))
+
         # Train Models
         models = train_models(X_train, y_train)
 
@@ -66,30 +66,42 @@ def run_pipeline():
         best_model_name = ""
 
         for name, model in models.items():
+            # Get best estimator
+            best_estimator = model.best_estimator_
 
-            acc, report = evaluate_model(model, X_test, y_test)
+            acc, report = evaluate_model(best_estimator, X_test, y_test)
 
+            logger.info(f"{name} Best Params: {model.best_params_}")
             logger.info(f"{name} Accuracy: {acc}")
             logger.info(f"{name} Report:\n{report}")
 
             # Log metrics
+            # mlflow.log_params({f"{name}_{k}": v for k, v in model.best_params_.items()})
+            for param, value in model.best_params_.items():
+                mlflow.log_param(f"{name}_{param}", value)
+
             mlflow.log_metric(f"{name}_accuracy", acc)
 
+            # Log report
+            mlflow.log_text(report, f"{name}_classification_report.txt")
+            
             # Log model
-            mlflow.sklearn.log_model(model, name=name)
+            mlflow.sklearn.log_model(best_estimator, name=name)
 
             if acc > best_score:
                 best_score = acc
-                best_model = model
+                best_model = best_estimator
                 best_model_name = name
 
         # Log best model details
         mlflow.log_metric("best_accuracy", best_score)
         mlflow.log_param("best_model", best_model_name)
 
-        os.makedirs("models", exist_ok=True)
+        # os.makedirs("models", exist_ok=True)
 
-        joblib.dump(best_model, models_path / "best_model.pkl")
+        # joblib.dump(best_model, models_path / "best_model.pkl")
+        with open(models_path / "model_info.txt", "w") as f:
+            f.write(f"Best Model: {best_model_name}\nAccuracy: {best_score}")
         joblib.dump(scaler, models_path / "scaler.pkl")
 
         logger.info(f"Best model: {best_model_name} with accuracy {best_score}")
