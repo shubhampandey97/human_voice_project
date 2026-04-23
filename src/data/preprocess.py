@@ -17,7 +17,7 @@ def remove_outliers_iqr(df, factor=1.5):
         lower = Q1 - factor * IQR
         upper = Q3 + factor * IQR
 
-        df[col] = np.clip(df[col], lower, upper)
+        df.loc[:, col] = np.clip(df[col], lower, upper)
 
     return df
 
@@ -51,6 +51,10 @@ def preprocess_data(df):
     df = remove_outliers_iqr(df)
     logger.info("Outliers handled using IQR")
 
+    # Handle inf and NaN values
+    df = df.replace([np.inf, -np.inf], 0)
+    df = df.fillna(0)
+
     # Handle missing values
     missing = df.isnull().sum().sum()
     if missing > 0:
@@ -58,14 +62,14 @@ def preprocess_data(df):
         df = df.dropna()
         logger.info("Missing values dropped")
 
-    # 🔹 Target Separation
+    # Target Separation
     if "label" not in df.columns:
         raise ValueError("Target column 'label' not found in dataset")
 
     X = df.drop("label", axis=1)
     y = df["label"]
 
-    # 🔹 Feature Scaling (IMPORTANT: only features, not target)
+    # Feature Scaling (IMPORTANT: only features, not target)
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 

@@ -13,7 +13,6 @@ from src.data.preprocess import preprocess_data
 from src.features.build_features import build_features
 from src.models.train_model import train_models
 from src.models.evaluate import evaluate_model
-from src.features.build_features import build_features
 
 logger = get_logger(__name__)
 
@@ -39,10 +38,12 @@ def run_pipeline():
 
         # Feature Engineering
         df = build_features(df)
+        logger.info(f"Features after engineering: {df.shape}")
 
         # Preprocessing
         X, y, scaler = preprocess_data(df)
 
+        # Save processed data
         processed_df = pd.DataFrame(X, columns=df.drop("label", axis=1).columns)
         processed_df["label"] = y.values
 
@@ -54,8 +55,6 @@ def run_pipeline():
 
         logger.info(f"Processed data saved at {processed_file}")
 
-        # Feature Engineering
-        X = build_features(X)
 
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
@@ -68,6 +67,9 @@ def run_pipeline():
         best_model = None
         best_score = 0
         best_model_name = ""
+
+        reports_path = BASE_DIR / "reports"
+        reports_path.mkdir(exist_ok=True)
 
         for name, model in models.items():
             # Get best estimator
@@ -85,15 +87,10 @@ def run_pipeline():
                 mlflow.log_param(f"{name}_{param}", value)
 
             mlflow.log_metric(f"{name}_accuracy", acc)
-
             # Log report
             mlflow.log_text(report, f"{name}_classification_report.txt")
 
-            reports_path = BASE_DIR / "reports"
-            reports_path.mkdir(exist_ok=True)
-
             report_file = reports_path / f"{name}_classification_report.txt"
-
             with open(report_file, "w") as f:
                 f.write(report)
 
@@ -111,12 +108,12 @@ def run_pipeline():
         mlflow.log_metric("best_accuracy", best_score)
         mlflow.log_param("best_model", best_model_name)
 
-        os.makedirs("models", exist_ok=True)
-
         joblib.dump(best_model, models_path / "best_model.pkl")
+        joblib.dump(scaler, models_path / "scaler.pkl")
+        
         with open(models_path / "model_info.txt", "w") as f:
             f.write(f"Best Model: {best_model_name}\nAccuracy: {best_score}")
-        joblib.dump(scaler, models_path / "scaler.pkl")
+        
 
         logger.info(f"Best model: {best_model_name} with accuracy {best_score}")
         logger.info("Best model saved")
