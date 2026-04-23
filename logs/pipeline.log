@@ -33,3 +33,41 @@
 2026-04-20 18:56:12,844 - __main__ - INFO - SVM Accuracy: 0.9993364299933643
 2026-04-20 18:56:12,850 - __main__ - INFO - Best model saved
 2026-04-20 18:56:12,851 - __main__ - INFO - Pipeline completed successfully
+2026-04-23 15:35:15,527 - __main__ - INFO - Pipeline started
+2026-04-23 15:35:59,892 - __main__ - INFO - Loading data from D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\raw\vocal_gender_features_new.csv
+2026-04-23 15:36:01,239 - __main__ - INFO - Processed data saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\processed\vocal_gender_features_cleaned.csv
+2026-04-23 15:36:01,239 - src.features.build_features - INFO - Feature engineering started
+2026-04-23 15:36:01,240 - src.features.build_features - INFO - Feature engineering completed
+2026-04-23 15:36:01,254 - src.models.train_model - INFO - Training models started
+2026-04-23 15:36:15,547 - src.models.train_model - INFO - Random Forest trained
+2026-04-23 15:36:20,277 - src.models.train_model - INFO - SVM trained
+2026-04-23 15:36:20,277 - src.models.train_model - INFO - All models trained
+2026-04-23 15:36:20,277 - src.models.evaluate - INFO - Evaluating model
+2026-04-23 15:36:20,382 - src.models.evaluate - INFO - Model accuracy: 0.9947
+2026-04-23 15:36:20,382 - __main__ - INFO - RandomForest Accuracy: 0.9946914399469144
+2026-04-23 15:36:20,383 - __main__ - INFO - RandomForest Report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.99      0.99      1046
+           1       0.99      1.00      1.00      1968
+
+    accuracy                           0.99      3014
+   macro avg       1.00      0.99      0.99      3014
+weighted avg       0.99      0.99      0.99      3014
+
+2026-04-23 15:36:34,055 - src.models.evaluate - INFO - Evaluating model
+2026-04-23 15:36:34,323 - src.models.evaluate - INFO - Model accuracy: 0.9993
+2026-04-23 15:36:34,323 - __main__ - INFO - SVM Accuracy: 0.9993364299933643
+2026-04-23 15:36:34,323 - __main__ - INFO - SVM Report:
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      1046
+           1       1.00      1.00      1.00      1968
+
+    accuracy                           1.00      3014
+   macro avg       1.00      1.00      1.00      3014
+weighted avg       1.00      1.00      1.00      3014
+
+2026-04-23 15:36:42,789 - __main__ - INFO - Best model: SVM with accuracy 0.9993364299933643
+2026-04-23 15:36:42,790 - __main__ - INFO - Best model saved
+2026-04-23 15:36:42,907 - __main__ - INFO - Pipeline completed successfully

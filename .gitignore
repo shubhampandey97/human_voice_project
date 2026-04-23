@@ -25,6 +25,10 @@ human_voice_cls_env/
 # Jupyter
 .ipynb_checkpoints/
 
+# MLflow
+mlruns/
+mlflow.db
+
 # OS files
 .DS_Store
 Thumbs.db
