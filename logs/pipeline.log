@@ -216,3 +216,23 @@ weighted avg       1.00      1.00      1.00      3014
 2026-04-23 18:14:02,190 - __main__ - INFO - Best model: SVM with accuracy 0.9996682149966821
 2026-04-23 18:14:02,191 - __main__ - INFO - Best model saved
 2026-04-23 18:14:02,305 - __main__ - INFO - Pipeline completed successfully
+2026-04-23 19:02:16,537 - __main__ - INFO - Clustering pipeline started
+2026-04-23 19:02:18,582 - __main__ - INFO - Loading data from D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\raw\vocal_gender_features_new.csv
+2026-04-23 19:02:20,292 - src.data.load_data - INFO - Data loaded successfully from D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\raw\vocal_gender_features_new.csv
+2026-04-23 19:02:20,292 - src.data.load_data - INFO - Shape of dataset: (16148, 44)
+2026-04-23 19:02:20,292 - __main__ - INFO - Dataset shape: (16148, 44)
+2026-04-23 19:02:20,310 - src.data.preprocess - INFO - Starting preprocessing...
+2026-04-23 19:02:20,360 - src.data.preprocess - INFO - Removed duplicates: (16148, 44) → (15070, 44)
+2026-04-23 19:02:20,399 - src.data.preprocess - INFO - Scaling completed
+2026-04-23 19:02:20,399 - __main__ - INFO - Preprocessing completed
+2026-04-23 19:02:20,399 - __main__ - INFO - Training clustering models
+2026-04-23 19:02:20,399 - src.models.cluster_model - INFO - Training KMeans model
+2026-04-23 19:02:23,937 - src.models.cluster_model - INFO - Training DBSCAN model
+2026-04-23 19:02:24,354 - __main__ - INFO - Evaluating KMeans
+2026-04-23 19:02:33,445 - src.models.evaluate_clustering - INFO - Silhouette score: 0.1745264670426607
+2026-04-23 19:02:33,464 - __main__ - INFO - KMeans Silhouette Score: 0.1745264670426607
+2026-04-23 19:02:45,710 - __main__ - INFO - Evaluating DBSCAN
+2026-04-23 19:02:45,717 - src.models.evaluate_clustering - WARNING - Invalid clustering for silhouette score
+2026-04-23 19:02:45,717 - __main__ - INFO - DBSCAN Silhouette Score: -1
+2026-04-23 19:02:52,335 - __main__ - INFO - All clustering models evaluated
+2026-04-23 19:02:52,454 - __main__ - INFO - Clustering pipeline completed successfully
