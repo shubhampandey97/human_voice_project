@@ -236,3 +236,129 @@ weighted avg       1.00      1.00      1.00      3014
 2026-04-23 19:02:45,717 - __main__ - INFO - DBSCAN Silhouette Score: -1
 2026-04-23 19:02:52,335 - __main__ - INFO - All clustering models evaluated
 2026-04-23 19:02:52,454 - __main__ - INFO - Clustering pipeline completed successfully
+2026-04-23 19:26:49,037 - __main__ - INFO - Clustering pipeline started
+2026-04-23 19:26:50,634 - __main__ - INFO - Loading data from D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\raw\vocal_gender_features_new.csv
+2026-04-23 19:26:52,416 - src.data.load_data - INFO - Data loaded successfully from D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\raw\vocal_gender_features_new.csv
+2026-04-23 19:26:52,416 - src.data.load_data - INFO - Shape of dataset: (16148, 44)
+2026-04-23 19:26:52,416 - __main__ - INFO - Dataset shape: (16148, 44)
+2026-04-23 19:26:52,416 - src.data.preprocess - INFO - Starting preprocessing...
+2026-04-23 19:26:52,482 - src.data.preprocess - INFO - Removed duplicates: (16148, 44) → (15070, 44)
+2026-04-23 19:26:52,508 - src.data.preprocess - INFO - Scaling completed
+2026-04-23 19:26:52,510 - __main__ - INFO - Preprocessing completed
+2026-04-23 19:26:52,510 - __main__ - INFO - Training clustering models
+2026-04-23 19:26:52,510 - src.models.cluster_model - INFO - Training KMeans model
+2026-04-23 19:27:03,527 - src.models.cluster_model - INFO - Training KMeans model
+2026-04-23 19:27:06,786 - src.models.cluster_model - INFO - Training KMeans model
+2026-04-23 19:27:10,644 - src.models.cluster_model - INFO - Training KMeans model
+2026-04-23 19:27:13,880 - src.models.cluster_model - INFO - Training DBSCAN model
+2026-04-23 19:27:14,430 - __main__ - INFO - Evaluating KMeans
+2026-04-23 19:27:18,675 - src.models.evaluate_clustering - INFO - Silhouette score: 0.1745264670426607
+2026-04-23 19:27:18,675 - __main__ - INFO - KMeans Silhouette Score: 0.1745264670426607
+2026-04-23 19:27:19,069 - __main__ - INFO - Cluster 0: 11464 samples
+2026-04-23 19:27:19,070 - __main__ - INFO - Cluster 1: 3606 samples
+2026-04-23 19:27:19,072 - __main__ - INFO - KMeans clustering report saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\KMeans_clustering_report.txt
+2026-04-23 19:27:30,654 - __main__ - INFO - Evaluating DBSCAN
+2026-04-23 19:27:30,764 - __main__ - INFO - DBSCAN Silhouette Score: -1
+2026-04-23 19:27:30,881 - __main__ - INFO - Cluster -1: 15070 samples
+2026-04-23 19:27:30,881 - __main__ - INFO - DBSCAN clustering report saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\DBSCAN_clustering_report.txt
+2026-04-23 19:27:36,391 - __main__ - INFO - All clustering models evaluated
+2026-04-23 19:27:36,499 - __main__ - INFO - Clustering pipeline completed successfully
+2026-04-23 19:48:43,654 - __main__ - INFO - Clustering pipeline started
+2026-04-23 19:48:45,209 - __main__ - INFO - Loading data from D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\raw\vocal_gender_features_new.csv
+2026-04-23 19:48:47,271 - src.data.load_data - INFO - Data loaded successfully from D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\raw\vocal_gender_features_new.csv
+2026-04-23 19:48:47,271 - src.data.load_data - INFO - Shape of dataset: (16148, 44)
+2026-04-23 19:48:47,286 - __main__ - INFO - Dataset shape: (16148, 44)
+2026-04-23 19:48:47,287 - src.data.preprocess - INFO - Starting preprocessing...
+2026-04-23 19:48:47,341 - src.data.preprocess - INFO - Removed duplicates: (16148, 44) → (15070, 44)
+2026-04-23 19:48:47,362 - src.data.preprocess - INFO - Scaling completed
+2026-04-23 19:48:47,365 - __main__ - INFO - Preprocessing completed
+2026-04-23 19:48:47,366 - __main__ - INFO - Training clustering models
+2026-04-23 19:48:47,366 - src.models.cluster_model - INFO - Training KMeans with k=2
+2026-04-23 19:48:57,495 - src.models.cluster_model - INFO - Training KMeans with k=3
+2026-04-23 19:49:01,208 - src.models.cluster_model - INFO - Training KMeans with k=4
+2026-04-23 19:49:03,938 - src.models.cluster_model - INFO - Training KMeans with k=5
+2026-04-23 19:49:06,768 - src.models.cluster_model - INFO - Training DBSCAN model
+2026-04-23 19:49:07,101 - __main__ - INFO - Evaluating KMeans
+2026-04-23 19:49:10,223 - src.models.evaluate_clustering - INFO - Silhouette score: 0.1745264670426607
+2026-04-23 19:49:10,223 - __main__ - INFO - KMeans Silhouette Score: 0.1745264670426607
+2026-04-23 19:49:10,666 - __main__ - INFO - Cluster 0: 11464 samples
+2026-04-23 19:49:10,666 - __main__ - INFO - Cluster 1: 3606 samples
+2026-04-23 19:49:10,666 - __main__ - INFO - KMeans clustering report saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\KMeans_clustering_report.txt
+2026-04-23 19:49:11,624 - __main__ - INFO - KMeans cluster plot saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\figures\KMeans_clusters.png
+2026-04-23 19:49:23,589 - __main__ - INFO - Evaluating DBSCAN
+2026-04-23 19:49:23,716 - __main__ - INFO - DBSCAN Silhouette Score: -1
+2026-04-23 19:49:23,820 - __main__ - INFO - Cluster -1: 15070 samples
+2026-04-23 19:49:23,820 - __main__ - INFO - DBSCAN clustering report saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\DBSCAN_clustering_report.txt
+2026-04-23 19:49:24,287 - __main__ - INFO - DBSCAN cluster plot saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\figures\DBSCAN_clusters.png
+2026-04-23 19:49:30,129 - __main__ - INFO - All clustering models evaluated
+2026-04-23 19:49:30,236 - __main__ - INFO - Clustering pipeline completed successfully
+2026-04-23 19:55:55,421 - __main__ - INFO - Clustering pipeline started
+2026-04-23 19:55:56,952 - __main__ - INFO - Loading data from D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\raw\vocal_gender_features_new.csv
+2026-04-23 19:55:58,834 - src.data.load_data - INFO - Data loaded successfully from D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\raw\vocal_gender_features_new.csv
+2026-04-23 19:55:58,834 - src.data.load_data - INFO - Shape of dataset: (16148, 44)
+2026-04-23 19:55:58,834 - __main__ - INFO - Dataset shape: (16148, 44)
+2026-04-23 19:55:58,834 - src.data.preprocess - INFO - Starting preprocessing...
+2026-04-23 19:55:58,886 - src.data.preprocess - INFO - Removed duplicates: (16148, 44) → (15070, 44)
+2026-04-23 19:55:58,907 - src.data.preprocess - INFO - Scaling completed
+2026-04-23 19:55:58,909 - __main__ - INFO - Preprocessing completed
+2026-04-23 19:55:58,909 - __main__ - INFO - Training clustering models
+2026-04-23 19:55:58,909 - src.models.cluster_model - INFO - Training KMeans with k=2
+2026-04-23 19:56:07,678 - src.models.cluster_model - INFO - Training KMeans with k=3
+2026-04-23 19:56:10,741 - src.models.cluster_model - INFO - Training KMeans with k=4
+2026-04-23 19:56:13,487 - src.models.cluster_model - INFO - Training KMeans with k=5
+2026-04-23 19:56:16,141 - src.models.cluster_model - INFO - Training DBSCAN model
+2026-04-23 19:56:16,486 - __main__ - INFO - Evaluating KMeans
+2026-04-23 19:56:20,147 - src.models.evaluate_clustering - INFO - Silhouette score: 0.1745264670426607
+2026-04-23 19:56:20,147 - __main__ - INFO - KMeans Silhouette Score: 0.1745264670426607
+2026-04-23 19:56:20,654 - __main__ - INFO - Cluster 0: 11464 samples
+2026-04-23 19:56:20,747 - __main__ - INFO - Cluster 1: 3606 samples
+2026-04-23 19:56:20,880 - __main__ - INFO - KMeans clustering report saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\KMeans_clustering_report.txt
+2026-04-23 19:56:21,855 - __main__ - INFO - KMeans cluster plot saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\figures\KMeans_clusters.png
+2026-04-23 19:56:33,034 - __main__ - INFO - Evaluating DBSCAN
+2026-04-23 19:56:33,152 - __main__ - INFO - DBSCAN Silhouette Score: -1
+2026-04-23 19:56:33,387 - __main__ - INFO - Cluster -1: 15070 samples
+2026-04-23 19:56:33,502 - __main__ - INFO - DBSCAN clustering report saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\DBSCAN_clustering_report.txt
+2026-04-23 19:56:33,561 - __main__ - WARNING - DBSCAN has invalid clustering. Skipping visualization.
+2026-04-23 19:56:40,279 - __main__ - INFO - All clustering models evaluated
+2026-04-23 19:56:40,396 - __main__ - INFO - Clustering pipeline completed successfully
+2026-04-23 20:02:01,061 - __main__ - INFO - Clustering pipeline started
+2026-04-23 20:02:02,794 - __main__ - INFO - Loading data from D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\raw\vocal_gender_features_new.csv
+2026-04-23 20:02:04,292 - src.data.load_data - INFO - Data loaded successfully from D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\data\raw\vocal_gender_features_new.csv
+2026-04-23 20:02:04,292 - src.data.load_data - INFO - Shape of dataset: (16148, 44)
+2026-04-23 20:02:04,292 - __main__ - INFO - Dataset shape: (16148, 44)
+2026-04-23 20:02:04,292 - src.data.preprocess - INFO - Starting preprocessing...
+2026-04-23 20:02:04,353 - src.data.preprocess - INFO - Removed duplicates: (16148, 44) → (15070, 44)
+2026-04-23 20:02:04,370 - src.data.preprocess - INFO - Scaling completed
+2026-04-23 20:02:04,372 - __main__ - INFO - Preprocessing completed
+2026-04-23 20:02:04,373 - src.analysis.elbow_method - INFO - Running Elbow Method
+2026-04-23 20:02:04,373 - src.analysis.elbow_method - INFO - Training KMeans with k=1
+2026-04-23 20:02:07,106 - src.analysis.elbow_method - INFO - Training KMeans with k=2
+2026-04-23 20:02:07,141 - src.analysis.elbow_method - INFO - Training KMeans with k=3
+2026-04-23 20:02:07,171 - src.analysis.elbow_method - INFO - Training KMeans with k=4
+2026-04-23 20:02:07,220 - src.analysis.elbow_method - INFO - Training KMeans with k=5
+2026-04-23 20:02:07,282 - src.analysis.elbow_method - INFO - Training KMeans with k=6
+2026-04-23 20:02:07,325 - src.analysis.elbow_method - INFO - Training KMeans with k=7
+2026-04-23 20:02:07,390 - src.analysis.elbow_method - INFO - Training KMeans with k=8
+2026-04-23 20:02:07,446 - src.analysis.elbow_method - INFO - Training KMeans with k=9
+2026-04-23 20:02:07,715 - src.analysis.elbow_method - INFO - Elbow plot saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\figures\elbow_method.png
+2026-04-23 20:02:07,763 - src.analysis.elbow_method - INFO - Elbow method completed
+2026-04-23 20:02:07,763 - __main__ - INFO - Training clustering models
+2026-04-23 20:02:07,763 - src.models.cluster_model - INFO - Training KMeans with k=2
+2026-04-23 20:02:13,170 - src.models.cluster_model - INFO - Training KMeans with k=3
+2026-04-23 20:02:16,771 - src.models.cluster_model - INFO - Training KMeans with k=4
+2026-04-23 20:02:19,713 - src.models.cluster_model - INFO - Training KMeans with k=5
+2026-04-23 20:02:22,675 - src.models.cluster_model - INFO - Training DBSCAN model
+2026-04-23 20:02:23,042 - __main__ - INFO - Evaluating KMeans
+2026-04-23 20:02:26,224 - src.models.evaluate_clustering - INFO - Silhouette score: 0.1745264670426607
+2026-04-23 20:02:26,224 - __main__ - INFO - KMeans Silhouette Score: 0.1745264670426607
+2026-04-23 20:02:26,820 - __main__ - INFO - Cluster 0: 11464 samples
+2026-04-23 20:02:26,929 - __main__ - INFO - Cluster 1: 3606 samples
+2026-04-23 20:02:27,048 - __main__ - INFO - KMeans clustering report saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\KMeans_clustering_report.txt
+2026-04-23 20:02:27,637 - __main__ - INFO - KMeans cluster plot saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\figures\KMeans_clusters.png
+2026-04-23 20:02:39,159 - __main__ - INFO - Evaluating DBSCAN
+2026-04-23 20:02:39,283 - __main__ - INFO - DBSCAN Silhouette Score: -1
+2026-04-23 20:02:39,525 - __main__ - INFO - Cluster -1: 15070 samples
+2026-04-23 20:02:39,644 - __main__ - INFO - DBSCAN clustering report saved at D:\Guvi\Projects\mini\Human Voice Classification and Clustering\Human_Voice_Classification_and_Clustering\reports\DBSCAN_clustering_report.txt
+2026-04-23 20:02:39,694 - __main__ - WARNING - DBSCAN has invalid clustering. Skipping visualization.
+2026-04-23 20:02:45,785 - __main__ - INFO - All clustering models evaluated
+2026-04-23 20:02:46,004 - __main__ - INFO - Clustering pipeline completed successfully

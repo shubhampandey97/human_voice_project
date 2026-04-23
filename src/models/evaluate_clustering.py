@@ -6,11 +6,13 @@ logger = get_logger(__name__)
 def evaluate_clustering(model, X):
     labels = model.labels_
 
-    if len(set(labels)) > 1 and -1 not in set(labels):
-        score = silhouette_score(X, labels)
-        logger.info(f"Silhouette score: {score}")
-    else:
-        score = -1
-        logger.warning("Invalid clustering for silhouette score")
+    unique_labels = set(labels)
 
-    return score
+    # Invalid clustering case
+    if len(unique_labels) <= 1 or -1 in unique_labels:
+        return -1, labels
+
+    score = silhouette_score(X, labels)
+    logger.info(f"Silhouette score: {score}")
+
+    return score, labels
