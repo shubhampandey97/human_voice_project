@@ -13,6 +13,8 @@ from src.data.preprocess import preprocess_data
 from src.features.build_features import build_features
 from src.models.train_model import train_models
 from src.models.evaluate import evaluate_model
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
 
 logger = get_logger(__name__)
 
@@ -74,7 +76,7 @@ def run_pipeline():
             mlflow.log_metric(f"{name}_accuracy", acc)
 
             # Log model
-            mlflow.sklearn.log_model(model, artifact_path=name)
+            mlflow.sklearn.log_model(model, name=name)
 
             if acc > best_score:
                 best_score = acc

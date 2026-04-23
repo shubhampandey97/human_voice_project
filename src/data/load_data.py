@@ -17,12 +17,12 @@ def load_data(file_path: str) -> pd.DataFrame:
     """
 
     if not os.path.exists(file_path):
-        raise FileNotFoundError(f"❌ File not found at: {file_path}")
+        raise FileNotFoundError(f"File not found at: {file_path}")
 
     try:
         df = pd.read_csv(file_path)
-        logger.info(f"✅ Data loaded successfully from {file_path}")
-        logger.info(f"📊 Shape of dataset: {df.shape}")
+        logger.info(f"Data loaded successfully from {file_path}")
+        logger.info(f"Shape of dataset: {df.shape}")
     except Exception as e:
         raise RuntimeError(f"Error loading data: {e}")
 
