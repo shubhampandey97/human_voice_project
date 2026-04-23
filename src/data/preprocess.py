@@ -25,7 +25,7 @@ def preprocess_data(df: pd.DataFrame):
     df = df.copy()
 
     # 🔹 Basic Cleaning
-    logger.info("🔄 Starting preprocessing...")
+    logger.info("Starting preprocessing...")
 
     # Remove duplicates
     initial_shape = df.shape
@@ -35,13 +35,13 @@ def preprocess_data(df: pd.DataFrame):
     # Handle missing values
     missing = df.isnull().sum().sum()
     if missing > 0:
-        logger.warning(f"⚠️ Missing values found: {missing}")
+        logger.warning(f"Missing values found: {missing}")
         df = df.dropna()
         logger.info("Missing values dropped")
 
     # 🔹 Target Separation
     if "label" not in df.columns:
-        raise ValueError("❌ Target column 'label' not found in dataset")
+        raise ValueError("Target column 'label' not found in dataset")
 
     X = df.drop("label", axis=1)
     y = df["label"]
@@ -50,6 +50,6 @@ def preprocess_data(df: pd.DataFrame):
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
-    logger.info("✅ Scaling completed")
+    logger.info("Scaling completed")
 
     return X_scaled, y, scaler
