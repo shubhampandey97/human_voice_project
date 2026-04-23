@@ -1,95 +1,90 @@
-# import streamlit as st
-# import pandas as pd
-# import joblib
-
-# # Load model and scaler
-# model = joblib.load('../models/best_model.pkl')
-# scaler = joblib.load('../models/scaler.pkl')
-
-# # Streamlit UI
-# st.title("🎙️ Human Voice Gender Classification")
-# st.write("Upload a voice feature row to predict gender.")
-
-# uploaded_file = st.file_uploader("Upload CSV File with Feature Row (1 sample)", type="csv")
-
-# if uploaded_file is not None:
-#     input_df = pd.read_csv(uploaded_file)
-    
-#     # Check structure
-#     if input_df.shape[1] != 43:
-#         st.error("Expected 43 input features.")
-#     else:
-#         st.write("✅ Input Preview:", input_df.head())
-
-#         # Scale input
-#         input_scaled = scaler.transform(input_df)
-
-#         # Predict
-#         prediction = model.predict(input_scaled)[0]
-#         label = "Male" if prediction == 1 else "Female"
-
-#         st.success(f"Predicted Gender: **{label}**")
-
-
 import streamlit as st
 import pandas as pd
-import numpy as np
 import joblib
+from pathlib import Path
 
-# Load saved model and scaler
-model = joblib.load('../models/best_model.pkl')
-scaler = joblib.load('../models/scaler.pkl')
+# ------------------ Paths ------------------
+BASE_DIR = Path(__file__).resolve().parents[1]
+MODEL_PATH = BASE_DIR / "models" / "best_model.pkl"
+SCALER_PATH = BASE_DIR / "models" / "scaler.pkl"
+REPORTS_PATH = BASE_DIR / "reports" / "figures"
 
-# App Title
-st.set_page_config(page_title="Voice Gender Classification", layout="centered")
-st.title("🎙️ Human Voice Gender Classification")
-st.markdown("Upload a voice feature CSV or enter values manually to classify voice as **Male or Female**.")
+# ------------------ Load Model ------------------
+@st.cache_resource
+def load_model():
+    model = joblib.load(MODEL_PATH)
+    scaler = joblib.load(SCALER_PATH)
+    return model, scaler
 
-# Sidebar navigation
-st.sidebar.title("🔍 Prediction Options")
-option = st.sidebar.radio("Choose input method:", ["Manual Input", "Upload CSV"])
+model, scaler = load_model()
 
-# Expected 43 feature names (same order as training)
-FEATURES = [
-    'mean_spectral_centroid', 'std_spectral_centroid', 'mean_spectral_bandwidth', 'std_spectral_bandwidth',
-    'mean_spectral_contrast', 'mean_spectral_flatness', 'mean_spectral_rolloff', 'zero_crossing_rate',
-    'rms_energy', 'mean_pitch', 'min_pitch', 'max_pitch', 'std_pitch', 'spectral_skew', 'spectral_kurtosis',
-    'energy_entropy', 'log_energy'
-] + [f'mfcc_{i}_{stat}' for i in range(1, 14) for stat in ['mean', 'std']]
+# ------------------ UI Config ------------------
+st.set_page_config(page_title="Human Voice Classification", layout="wide")
 
-# Manual Input UI
-if option == "Manual Input":
-    st.subheader("🔧 Enter Voice Features")
-    manual_input = {}
+st.title("🎙️ Human Voice Classification & Clustering App")
 
-    # Split into 3 columns
-    col1, col2, col3 = st.columns(3)
-    for idx, feature in enumerate(FEATURES):
-        with [col1, col2, col3][idx % 3]:
-            manual_input[feature] = st.number_input(f"{feature}", format="%.4f", step=0.01)
+# ------------------ Sidebar ------------------
+st.sidebar.header("Navigation")
+option = st.sidebar.radio("Go to", ["Prediction", "Clustering Insights"])
 
-    if st.button("Predict"):
-        input_df = pd.DataFrame([manual_input])
-        scaled_input = scaler.transform(input_df)
-        prediction = model.predict(scaled_input)[0]
-        label = "👩 Female" if prediction == 0 else "👨 Male"
-        st.success(f"### 🎯 Predicted Gender: {label}")
+# ================== Prediction ==================
+if option == "Prediction":
+    st.header("🔍 Predict Voice Gender")
 
-# Upload CSV UI
-if option == "Upload CSV":
-    st.subheader("📂 Upload CSV File")
-    uploaded_file = st.file_uploader("Upload a CSV file containing 1 row of 43 features", type=["csv"])
-    
+    st.write("Upload a CSV file with the same features used in training")
+
+    uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
+
     if uploaded_file:
+        df = pd.read_csv(uploaded_file)
+        st.write("### Uploaded Data", df.head())
+
         try:
-            input_df = pd.read_csv(uploaded_file)
-            if input_df.shape[1] != 43:
-                st.error("❌ CSV must contain exactly 43 columns.")
-            else:
-                st.dataframe(input_df)
-                scaled_input = scaler.transform(input_df)
-                prediction = model.predict(scaled_input)[0]
-                label = "👩 Female" if prediction == 0 else "👨 Male"
-                st.success(f"### 🎯 Predicted Gender: {label}")
+            X_scaled = scaler.transform(df)
+            predictions = model.predict(X_scaled)
+
+            df["Prediction"] = predictions
+            df["Prediction"] = df["Prediction"].map({0: "Female", 1: "Male"})
+
+            st.success("Prediction Completed ✅")
+            st.dataframe(df)
+
         except Exception as e:
-            st.error(f"Error processing file: {e}")
+            st.error(f"Error: {e}")
+
+# ================== Clustering ==================
+elif option == "Clustering Insights":
+    st.header("📊 Clustering Insights")
+
+    # ---- Elbow Method ----
+    st.subheader("Elbow Method")
+    elbow_path = REPORTS_PATH / "elbow_method.png"
+
+    if elbow_path.exists():
+        st.image(str(elbow_path))
+    else:
+        st.warning("Elbow plot not found")
+
+    # ---- KMeans Plot ----
+    st.subheader("KMeans Clusters")
+    kmeans_path = REPORTS_PATH / "KMeans_clusters.png"
+
+    if kmeans_path.exists():
+        st.image(str(kmeans_path))
+    else:
+        st.warning("KMeans plot not found")
+
+    # ---- Reports ----
+    st.subheader("Reports")
+
+    try:
+        with open(BASE_DIR / "reports/KMeans_clustering_report.txt") as f:
+            st.text(f.read())
+    except:
+        st.warning("KMeans report not found")
+
+    try:
+        with open(BASE_DIR / "reports/DBSCAN_clustering_report.txt") as f:
+            st.text(f.read())
+    except:
+        st.warning("DBSCAN report not found")
