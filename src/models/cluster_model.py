@@ -15,20 +15,28 @@ def train_clustering_models(X):
 
     for k in range(2, 6):
         logger.info(f"Training KMeans with k={k}")
+
         kmeans = KMeans(n_clusters=k, random_state=42)
         labels = kmeans.fit_predict(X)
 
-        score = silhouette_score(X, labels)
+        # Handle invalid clustering
+        if len(set(labels)) > 1:
+            score = silhouette_score(X, labels)
+            logger.info(f"k={k}, Silhouette Score={score}")
 
-        if score > best_score:
-            best_score = score
-            best_k = k
-            best_kmeans = kmeans
+            if score > best_score:
+                best_score = score
+                best_k = k
+                best_kmeans = kmeans
+
+    logger.info(f"Best KMeans: k={best_k}, score={best_score}")
+
     models["KMeans"] = (best_kmeans, best_score, best_k)
 
     logger.info("Training DBSCAN model")
-    dbscan = DBSCAN(eps=0.5, min_samples=10)
-    dbscan.fit(X)
-    models["DBSCAN"] = (dbscan, None, None)
+
+    dbscan = DBSCAN(eps=0.5, min_samples=5)
+    # dbscan.fit(X)
+    # models["DBSCAN"] = dbscan
 
     return models

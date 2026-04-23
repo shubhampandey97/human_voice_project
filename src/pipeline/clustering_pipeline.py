@@ -14,6 +14,9 @@ from src.models.evaluate_clustering import evaluate_clustering
 from src.utils.logger import get_logger
 from src.analysis.elbow_method import run_elbow_method
 
+from sklearn.preprocessing import StandardScaler
+
+
 logger = get_logger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -34,8 +37,18 @@ def run_clustering_pipeline():
         logger.info(f"Dataset shape: {df.shape}")
 
         # Preprocess
-        X, y, scaler = preprocess_data(df)
+        X, y, scaler, selector, feature_names = preprocess_data(df)
+
         logger.info("Preprocessing completed")
+
+        mlflow.log_text(str(feature_names), "selected_features.txt")
+
+        logger.info("Applying PCA for dimensionality reduction")
+
+        pca_model = PCA(n_components=5)
+        X = pca_model.fit_transform(X)
+
+        mlflow.log_param("pca_components", 5)
 
         reports_path = BASE_DIR / "reports"
         reports_path.mkdir(exist_ok=True)
@@ -46,10 +59,6 @@ def run_clustering_pipeline():
         # Train Models
         logger.info("Training clustering models")
         models = train_clustering_models(X)
-
-        # Create folders
-        reports_path = BASE_DIR / "reports"
-        reports_path.mkdir(exist_ok=True)
 
         figures_path = reports_path / "figures"
         figures_path.mkdir(exist_ok=True)
@@ -121,8 +130,8 @@ def run_clustering_pipeline():
 
                 # PCA VISUALIZATION (only if valid clustering)
                 if len(set(labels)) > 1:
-                    pca = PCA(n_components=2)
-                    X_pca = pca.fit_transform(X)
+                    pca_vis = PCA(n_components=2)
+                    X_pca = pca_vis.fit_transform(X)
 
                     plt.figure(figsize=(8, 6))
                     plt.scatter(X_pca[:, 0], X_pca[:, 1], c=labels)
