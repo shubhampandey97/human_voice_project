@@ -84,6 +84,16 @@ def run_pipeline():
 
             # Log report
             mlflow.log_text(report, f"{name}_classification_report.txt")
+
+            reports_path = BASE_DIR / "reports"
+            reports_path.mkdir(exist_ok=True)
+
+            report_file = reports_path / f"{name}_classification_report.txt"
+
+            with open(report_file, "w") as f:
+                f.write(report)
+
+            logger.info(f"{name} classification report saved at {report_file}")
             
             # Log model
             mlflow.sklearn.log_model(best_estimator, name=name)
