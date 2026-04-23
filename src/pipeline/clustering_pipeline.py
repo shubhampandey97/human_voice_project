@@ -43,6 +43,20 @@ def run_clustering_pipeline():
 
         mlflow.log_text(str(feature_names), "selected_features.txt")
 
+        models_path = BASE_DIR / "models"
+        models_path.mkdir(exist_ok=True)
+
+        # Save selected features for app usage
+        import joblib
+        joblib.dump(feature_names, models_path / "feature_names.pkl")
+
+        # Save readable version
+        with open(models_path / "selected_features.txt", "w") as f:
+            for feat in feature_names:
+                f.write(f"{feat}\n")
+
+        print("Saving feature_names at:", models_path / "feature_names.pkl")
+
         logger.info("Applying PCA for dimensionality reduction")
 
         pca_model = PCA(n_components=5)
