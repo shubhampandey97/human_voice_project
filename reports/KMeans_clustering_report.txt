@@ -1,0 +1,8 @@
+Model: KMeans
+Silhouette Score: 0.1745264670426607
+
+Cluster Distribution:
+Cluster 0: 11464 samples
+Cluster 1: 3606 samples
+
+Best K (KMeans): 2

@@ -1,0 +1,5 @@
+Model: DBSCAN
+Silhouette Score: -1
+
+Cluster Distribution:
+Cluster -1: 15070 samples
