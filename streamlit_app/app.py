@@ -1,16 +1,22 @@
+import sys
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parents[1]
+sys.path.append(str(BASE_DIR))
+
 import streamlit as st
 import pandas as pd
 import joblib
 import numpy as np
-from pathlib import Path
+
+from src.features.build_features import build_features
 
 # ------------------ PATHS ------------------
-BASE_DIR = Path(__file__).resolve().parents[1]
+
 
 MODEL_PATH = BASE_DIR / "models" / "best_model.pkl"
 SCALER_PATH = BASE_DIR / "models" / "scaler.pkl"
 SELECTOR_PATH = BASE_DIR / "models" / "selector.pkl"
-FEATURE_PATH = BASE_DIR / "models" / "feature_names.pkl"
+FEATURE_PATH = BASE_DIR / "models" / "raw_features.pkl"
 
 REPORTS_PATH = BASE_DIR / "reports"
 FIGURES_PATH = REPORTS_PATH / "figures"
@@ -21,10 +27,10 @@ def load_artifacts():
     model = joblib.load(MODEL_PATH)
     scaler = joblib.load(SCALER_PATH)
     selector = joblib.load(SELECTOR_PATH)
-    feature_names = joblib.load(FEATURE_PATH)
-    return model, scaler, selector, feature_names
+    raw_features = joblib.load(FEATURE_PATH)
+    return model, scaler, selector, raw_features
 
-model, scaler, selector, feature_names = load_artifacts()
+model, scaler, selector, raw_features = load_artifacts()
 
 # ------------------ UI ------------------
 st.set_page_config(page_title="Voice ML System", layout="wide")
@@ -45,7 +51,7 @@ if mode == "Manual Input":
     # Dynamic input generation
     cols = st.columns(3)
 
-    for i, feature in enumerate(feature_names):
+    for i, feature in enumerate(raw_features):
         with cols[i % 3]:
             inputs[feature] = st.number_input(
                 feature,
@@ -57,6 +63,7 @@ if mode == "Manual Input":
 
         try:
             input_df = pd.DataFrame([inputs])
+            input_df = build_features(input_df)
 
             # Pipeline
             X_scaled = scaler.transform(input_df)
@@ -82,6 +89,7 @@ elif mode == "Upload CSV":
 
     if uploaded_file:
         df = pd.read_csv(uploaded_file)
+        df = build_features(df)
 
         st.write("Preview", df.head())
 

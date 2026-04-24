@@ -38,6 +38,7 @@ def run_pipeline():
 
         logger.info(f"Loading data from {data_path}")
         df = load_data(str(data_path))
+        raw_features = df.drop("label", axis=1).columns
 
         # Feature Engineering
         df = build_features(df)
@@ -115,7 +116,11 @@ def run_pipeline():
         joblib.dump(best_model, models_path / "best_model.pkl")
         joblib.dump(scaler, models_path / "scaler.pkl")
         joblib.dump(selector, models_path / "selector.pkl")
-                
+
+        joblib.dump(raw_features, models_path / "raw_features.pkl")
+
+        logger.info(f"Raw features saved at {models_path / 'raw_features.pkl'}")
+                        
         with open(models_path / "model_info.txt", "w") as f:
             f.write(f"Best Model: {best_model_name}\nAccuracy: {best_score}")
 
