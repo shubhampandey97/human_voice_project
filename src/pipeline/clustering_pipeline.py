@@ -64,6 +64,9 @@ def run_clustering_pipeline():
 
         mlflow.log_param("pca_components", 5)
 
+        joblib.dump(pca_model, models_path / "pca.pkl")
+        logger.info(f"PCA model saved at {models_path / 'pca.pkl'}")
+
         reports_path = BASE_DIR / "reports"
         reports_path.mkdir(exist_ok=True)
 

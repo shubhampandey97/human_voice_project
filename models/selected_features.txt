@@ -6,6 +6,7 @@ mean_spectral_rolloff
 zero_crossing_rate
 rms_energy
 min_pitch
+log_energy
 mfcc_2_mean
 mfcc_2_std
 mfcc_3_std
@@ -13,8 +14,7 @@ mfcc_4_mean
 mfcc_5_mean
 mfcc_5_std
 mfcc_7_mean
+mfcc_7_std
 mfcc_10_mean
 mfcc_12_mean
 mfcc_12_std
-pitch_energy_ratio
-mfcc_mean_avg
